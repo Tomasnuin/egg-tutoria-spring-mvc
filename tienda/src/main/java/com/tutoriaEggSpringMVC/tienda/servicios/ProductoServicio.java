@@ -21,11 +21,11 @@ public class ProductoServicio {
     private FabricanteRepositorio fabricanteRepositorio;
 
     @Transactional
-    public void crearProducto(String nombre, Double precio, String idFabricante) throws MiException {
+    public void crearProducto(String nombre, Double precio, String codigoFabricante) throws MiException {
 
-        validar(nombre, precio);
+        validar(nombre, precio, codigoFabricante);
 
-        Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(idFabricante);
+        Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(codigoFabricante);
 
         Fabricante fabricante = new Fabricante();
 
@@ -42,12 +42,15 @@ public class ProductoServicio {
         productoRepositorio.save(producto);
     }
 
-    public void validar(String nombre, Double precio) throws MiException {
+    public void validar(String nombre, Double precio, String codigoFabricante) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El nombre no puede ser nulo o estar vacio.");
         }
         if (precio == null) {
+            throw new MiException("El precio no puede ser nulo.");
+        }
+        if ( codigoFabricante.isEmpty() || codigoFabricante == null) {
             throw new MiException("El precio no puede ser nulo.");
         }
     }
@@ -60,18 +63,18 @@ public class ProductoServicio {
         return productos;
     }
 
-    public List<Producto> listarProductosPorFabricante(String idFabricante) {
+    public List<Producto> listarProductosPorFabricante(String codigoFabricante) {
         List<Producto> productos = new ArrayList();
 
-        productos = productoRepositorio.buscarPorFabricante(idFabricante);
+        productos = productoRepositorio.buscarPorFabricante(codigoFabricante);
 
         return productos;
     }
 
-    public List<Producto> listarProductosPorPrecioRango(Double precioMin, Double precioMax) {
+    public List<Producto> listarProductosPorRangoPrecio(Double precioMin, Double precioMax) {
         List<Producto> productos = new ArrayList();
 
-        productos = productoRepositorio.buscarPorPrecioRango(precioMin, precioMax);
+        productos = productoRepositorio.buscarPorRangoPrecio(precioMin, precioMax);
 
         return productos;
     }
@@ -90,18 +93,17 @@ public class ProductoServicio {
     @Transactional
     public void modificarProducto(String nombre, Double precio, String codigoFabricante, String codigo) throws MiException {
 
-        validar(nombre, precio);
+        validar(nombre, precio, codigoFabricante);
 
         Optional<Producto> respuesta = productoRepositorio.findById(codigo);
         Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(codigoFabricante);
 
         Fabricante fabricante = new Fabricante();
-        
+
         if (respuestaFabricante.isPresent()) {
             fabricante = respuestaFabricante.get();
         }
-        
-        
+
         if (respuesta.isPresent()) {
             Producto producto = respuesta.get();
 

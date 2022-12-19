@@ -18,21 +18,18 @@
                 <thead>
                     <tr>
                         <th scope="col">Código del Fabricante</th>
-                        <th scope="col">Nombre del Fabricante</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Acciones</th>
-
                     </tr>
                 </thead>
 
-                <!-- th:each=" elemento_del_arreglo : ${lista_de_elementos}" -->
+                <!-- th:each=" elemento_de_la_lista : ${lista_de_elementos}" -->
                 <tbody th:each="fabricante : ${fabricantes}">
                     <tr>
 
                         <td th:text="${fabricante.codigo}"></td>
 
                         <td th:text="${fabricante.nombre}"></td>
-
-
 
                         <td>
                             <a th:href= "@{/fabricante/modificar/__${fabricante.codigo}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>

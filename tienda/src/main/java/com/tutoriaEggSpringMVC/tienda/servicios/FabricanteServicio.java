@@ -16,6 +16,7 @@ public class FabricanteServicio {
     @Autowired
     private FabricanteRepositorio fabricanteRepositorio;
 
+    // Porque funciona sin la etiqueta transactional?
     @Transactional
     public void crearFabricante(String nombre) throws MiException {
 
@@ -34,6 +35,7 @@ public class FabricanteServicio {
         }
     }
 
+    // Porque funciona sin la etiqueta transactional?
     public List<Fabricante> listarFabricantes() {
         List<Fabricante> fabricantes = new ArrayList();
 
@@ -42,12 +44,12 @@ public class FabricanteServicio {
         return fabricantes;
     }
 
-    @Transactional
-    public void modificarFabricante(String nombre, String id) throws MiException {
+
+    public void modificarFabricante(String nombre, String codigo) throws MiException {
 
         validar(nombre);
 
-        Optional<Fabricante> respuesta = fabricanteRepositorio.findById(id);
+        Optional<Fabricante> respuesta = fabricanteRepositorio.findById(codigo);
 
         if (respuesta.isPresent()) {
             Fabricante fabricante = respuesta.get();

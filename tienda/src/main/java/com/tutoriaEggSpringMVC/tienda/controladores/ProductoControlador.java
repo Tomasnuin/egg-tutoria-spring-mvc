@@ -34,7 +34,7 @@ public class ProductoControlador {
     }
 
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, Double precio, @RequestParam String codigoFabricante, ModelMap modelo) {
+    public String registro(@RequestParam String nombre, @RequestParam Double precio, @RequestParam String codigoFabricante, ModelMap modelo) {
 
         try {
 
@@ -83,7 +83,7 @@ public class ProductoControlador {
      */
     @PostMapping("/lista/precio")
     public String listarPrecioRango(@RequestParam Double precioMin, @RequestParam Double precioMax, ModelMap modelo) {
-        List<Producto> productos = productoServicio.listarProductosPorPrecioRango(precioMin, precioMax);
+        List<Producto> productos = productoServicio.listarProductosPorRangoPrecio(precioMin, precioMax);
  
         modelo.addAttribute("productos", productos);
         return "producto_lista_precio_min_max.html";

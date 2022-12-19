@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductoRepositorio extends JpaRepository<Producto, String>{
     
+    // JQL
     @Query("SELECT p FROM Producto p WHERE p.precio BETWEEN :precioMin and :precioMax")
-    public List<Producto> buscarPorPrecioRango(@Param ("precioMin") Double precioMin, @Param ("precioMax") Double precioMax);
+    public List<Producto> buscarPorRangoPrecio(@Param ("precioMin") Double precioMin, @Param ("precioMax") Double precioMax);
     
     @Query("SELECT p FROM Producto p WHERE p.fabricante.nombre = :nombre")
     public List<Producto> buscarPorFabricante(@Param ("nombre") String nombre); 

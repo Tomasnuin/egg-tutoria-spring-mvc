@@ -30,7 +30,7 @@
                 <tbody th:each="producto : ${productos}">
                     <tr>
 
-                        <th scope="row" th:text="${producto.codigo}"></th>
+                        <td scope="row" th:text="${producto.codigo}"></td>
 
                         <td th:text="${producto.nombre}"></td>
 
@@ -38,7 +38,7 @@
                         
                         <td th:text="${producto.fabricante.nombre}"></td>
 
-                        <!-- sacar despues -->
+
                         <td>
                             <a th:href= "@{/producto/modificar/__${producto.codigo}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
                         </td>
