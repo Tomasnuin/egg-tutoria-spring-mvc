@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navBar">
+    <div class="containerImg">
+        <a href="/" class="navbar-brand d-flex align-items-center">
+            <img class="logo" src="/img/egg-logo.png" alt="Img logo egg">
+        </a>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse elementosNav" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto elementos">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Productos
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                    <li><a class="dropdown-item" th:href="@{/producto/registrar}">Crear Producto</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" th:href="@{/producto/lista}">Listar Productos</a></li>
+                    
+                    <li><a class="dropdown-item" th:href="@{/producto/lista/precio/seleccionar}">Buscar Productos Por Precio</a></li>
+                </ul>
+            </li>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Fabricantes
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                    <li><a class="dropdown-item" th:href="@{/fabricante/registrar}">Crear Fabricante</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" th:href="@{/fabricante/lista}">Listar Fabricantes</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+</nav>
