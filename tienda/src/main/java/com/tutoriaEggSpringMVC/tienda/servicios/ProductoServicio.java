@@ -17,40 +17,39 @@ public class ProductoServicio {
 
     @Autowired
     ProductoRepositorio productoRepositorio;
+
     @Autowired
-    private FabricanteRepositorio fabricanteRepositorio;
+    private FabricanteServicio fabricanteServicio;
 
     @Transactional
     public void crearProducto(String nombre, Double precio, String codigoFabricante) throws MiException {
 
         validar(nombre, precio, codigoFabricante);
+        System.out.println("codigoFabricante = " + codigoFabricante);
+        Fabricante respuestaFabricante = fabricanteServicio.findById(codigoFabricante);
 
-        Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(codigoFabricante);
+        if (respuestaFabricante != null) {
+            Producto producto = new Producto();
 
-        Fabricante fabricante = new Fabricante();
+            producto.setNombre(nombre);
+            producto.setPrecio(precio);
+            producto.setFabricante(respuestaFabricante);
 
-        if (respuestaFabricante.isPresent()) {
-            fabricante = respuestaFabricante.get();
+            productoRepositorio.save(producto);
+        } else {
+            throw new MiException("Es necesario un fabricante existente.");
         }
-
-        Producto producto = new Producto();
-
-        producto.setNombre(nombre);
-        producto.setPrecio(precio);
-        producto.setFabricante(fabricante);
-
-        productoRepositorio.save(producto);
     }
 
     public void validar(String nombre, Double precio, String codigoFabricante) throws MiException {
 
-        if (nombre.isEmpty() || nombre == null) {
+        if (nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo o estar vacio.");
         }
         if (precio == null) {
             throw new MiException("El precio no puede ser nulo.");
         }
-        if ( codigoFabricante.isEmpty() || codigoFabricante == null) {
+        if (codigoFabricante.isEmpty() && fabricanteServicio.findById(codigoFabricante) != null) {
             throw new MiException("El precio no puede ser nulo.");
         }
     }
@@ -95,23 +94,31 @@ public class ProductoServicio {
 
         validar(nombre, precio, codigoFabricante);
 
-        Optional<Producto> respuesta = productoRepositorio.findById(codigo);
-        Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(codigoFabricante);
+        Producto respuesta = findById(codigo);
+        Fabricante respuestaFabricante = fabricanteServicio.findById(codigoFabricante);
 
-        Fabricante fabricante = new Fabricante();
-
-        if (respuestaFabricante.isPresent()) {
-            fabricante = respuestaFabricante.get();
-        }
-
-        if (respuesta.isPresent()) {
-            Producto producto = respuesta.get();
+        if (respuestaFabricante != null && respuesta != null) {
+            
+            Producto producto = respuesta;
 
             producto.setNombre(nombre);
             producto.setPrecio(precio);
-            producto.setFabricante(fabricante);
+            producto.setFabricante(respuestaFabricante);
 
             productoRepositorio.save(producto);
+            
+        } else {
+            throw new MiException("Es necesario un fabricante existente.");
+        }
+
+    }
+
+    public Producto findById(String codigo) {
+        Optional<Producto> respuesta = productoRepositorio.findById(codigo);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        } else {
+            return null;
         }
     }
 }

@@ -45,6 +45,9 @@ public class ProductoControlador {
 
             modelo.addAttribute("fabricantes", fabricantes);
 
+            modelo.addAttribute("nombre", nombre);
+            modelo.addAttribute("precio", precio);
+            
             modelo.put("error", e.getMessage());
             return "producto_form.html";
         }
