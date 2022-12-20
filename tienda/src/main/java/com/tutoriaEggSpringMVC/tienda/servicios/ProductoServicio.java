@@ -78,17 +78,6 @@ public class ProductoServicio {
         return productos;
     }
 
-    /**
-     * Como no podemos llamar al un repositorio desde el controlador, creamos
-     * esta función para llamar a la función del repositorio.
-     *
-     * @param codigo
-     * @return
-     */
-    public Producto getOne(String codigo) {
-        return productoRepositorio.getOne(codigo);
-    }
-
     @Transactional
     public void modificarProducto(String nombre, Double precio, String codigoFabricante, String codigo) throws MiException {
 
@@ -108,9 +97,8 @@ public class ProductoServicio {
             productoRepositorio.save(producto);
             
         } else {
-            throw new MiException("Es necesario un fabricante existente.");
+            throw new MiException("Es necesario un fabricante y/o un producto existentes.");
         }
-
     }
 
     public Producto findById(String codigo) {

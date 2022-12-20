@@ -27,7 +27,7 @@ public class FabricanteServicio {
 
         fabricanteRepositorio.save(fabricante);
     }
-        
+
     private void validar(String nombre) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
@@ -43,7 +43,6 @@ public class FabricanteServicio {
 
         return fabricantes;
     }
-
 
     public void modificarFabricante(String nombre, String codigo) throws MiException {
 
@@ -67,7 +66,12 @@ public class FabricanteServicio {
      * @param codigo El id de el fabricante.
      * @return
      */
-    public Fabricante getOne(String codigo) {
-        return fabricanteRepositorio.getOne(codigo);
+    public Fabricante findById(String codigo) {
+        Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(codigo);
+        if (respuestaFabricante.isPresent()) {
+            return respuestaFabricante.get();
+        }else{
+            return null;
+        }
     }
 }
