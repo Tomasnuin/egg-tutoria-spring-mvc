@@ -97,7 +97,7 @@ public class ProductoControlador {
         List<Fabricante> fabricantes = fabricanteServicio.listarFabricantes();
         modelo.addAttribute("fabricantes", fabricantes);
 
-        modelo.put("producto", productoServicio.getOne(codigo));
+        modelo.put("producto", productoServicio.findById(codigo));
         return "producto_modificar.html";
     }
 
@@ -112,7 +112,7 @@ public class ProductoControlador {
             List<Fabricante> fabricantes = fabricanteServicio.listarFabricantes();
             modelo.addAttribute("fabricantes", fabricantes);
 
-            modelo.put("producto", productoServicio.getOne(codigo));
+            modelo.put("producto", productoServicio.findById(codigo));
             modelo.put("error", ex.getMessage());
             return "producto_modificar.html";
         }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class ProductoServicio {
 
     @Autowired
-    ProductoRepositorio productoRepositorio;
+    private ProductoRepositorio productoRepositorio;
 
     @Autowired
     private FabricanteServicio fabricanteServicio;
