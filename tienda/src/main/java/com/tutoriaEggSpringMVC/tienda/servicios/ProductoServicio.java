@@ -3,7 +3,6 @@ package com.tutoriaEggSpringMVC.tienda.servicios;
 import com.tutoriaEggSpringMVC.tienda.entidades.Fabricante;
 import com.tutoriaEggSpringMVC.tienda.entidades.Producto;
 import com.tutoriaEggSpringMVC.tienda.excepciones.MiException;
-import com.tutoriaEggSpringMVC.tienda.repositorios.FabricanteRepositorio;
 import com.tutoriaEggSpringMVC.tienda.repositorios.ProductoRepositorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ProductoServicio {
     public void crearProducto(String nombre, Double precio, String codigoFabricante) throws MiException {
 
         validar(nombre, precio, codigoFabricante);
-        System.out.println("codigoFabricante = " + codigoFabricante);
+
         Fabricante respuestaFabricante = fabricanteServicio.findById(codigoFabricante);
 
         if (respuestaFabricante != null) {
@@ -70,7 +69,11 @@ public class ProductoServicio {
         return productos;
     }
 
-    public List<Producto> listarProductosPorRangoPrecio(Double precioMin, Double precioMax) {
+    public List<Producto> listarProductosPorRangoPrecio(Double precioMin, Double precioMax) throws MiException {
+        
+        if(precioMax < precioMin){
+            throw new MiException("El precio minimo no puede ser superior al precio maximo!");
+        }
         List<Producto> productos = new ArrayList();
 
         productos = productoRepositorio.buscarPorRangoPrecio(precioMin, precioMax);
@@ -87,7 +90,6 @@ public class ProductoServicio {
         Fabricante respuestaFabricante = fabricanteServicio.findById(codigoFabricante);
 
         if (respuestaFabricante != null && respuesta != null) {
-            
             Producto producto = respuesta;
 
             producto.setNombre(nombre);
@@ -95,18 +97,24 @@ public class ProductoServicio {
             producto.setFabricante(respuestaFabricante);
 
             productoRepositorio.save(producto);
-            
+
         } else {
             throw new MiException("Es necesario un fabricante y/o un producto existentes.");
         }
     }
 
     public Producto findById(String codigo) {
+
         Optional<Producto> respuesta = productoRepositorio.findById(codigo);
+
         if (respuesta.isPresent()) {
+            
             return respuesta.get();
+            
         } else {
+            
             return null;
+            
         }
     }
 }

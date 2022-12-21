@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller()
+@Controller
 @RequestMapping("/producto")
 public class ProductoControlador {
 
@@ -34,7 +35,8 @@ public class ProductoControlador {
     }
 
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, @RequestParam Double precio, @RequestParam String codigoFabricante, ModelMap modelo) {
+    public String registro(@RequestParam String nombre, @RequestParam(required = false) Double precio,
+            @RequestParam String codigoFabricante, ModelMap modelo) {
 
         try {
 
@@ -47,7 +49,7 @@ public class ProductoControlador {
 
             modelo.addAttribute("nombre", nombre);
             modelo.addAttribute("precio", precio);
-            
+
             modelo.put("error", e.getMessage());
             return "producto_form.html";
         }
@@ -71,25 +73,26 @@ public class ProductoControlador {
      * @return
      */
     @GetMapping("/lista/precio/seleccionar")
-    public String listarPrecioSeleccionar() {
+    public String listaPrecioSeleccionar() {
 
         return "producto_lista_precio_min_max_seleccionar.html";
     }
 
-    /**
-     * Muestra la lista donde el precio de los productos esta entre el mínimo y
-     * máximo.
-     * @param precioMin
-     * @param precioMax
-     * @param modelo
-     * @return
-     */
     @PostMapping("/lista/precio")
-    public String listarPrecioRango(@RequestParam Double precioMin, @RequestParam Double precioMax, ModelMap modelo) {
-        List<Producto> productos = productoServicio.listarProductosPorRangoPrecio(precioMin, precioMax);
- 
-        modelo.addAttribute("productos", productos);
-        return "producto_lista_precio_min_max.html";
+    public String listaPrecioRango(@RequestParam Double precioMin, @RequestParam Double precioMax,
+            ModelMap modelo) {
+        try {
+            List<Producto> productos = productoServicio.listarProductosPorRangoPrecio(precioMin, precioMax);
+
+            modelo.addAttribute("productos", productos);
+            return "producto_lista.html";
+
+        } catch (Exception e) {
+
+            modelo.put("error", e.getMessage());
+            return "producto_lista_precio_min_max_seleccionar.html";
+        }
+
     }
 
     @GetMapping("/modificar/{codigo}")
@@ -102,12 +105,14 @@ public class ProductoControlador {
     }
 
     @PostMapping("{codigo}")
-    public String modificar(@PathVariable String codigo, String nombre, Double precio, String codigoFabricante, ModelMap modelo) {
+    public String modificar(@PathVariable String codigo, String nombre, Double precio, String codigoFabricante, ModelMap modelo,
+            RedirectAttributes redirect) {
         try {
 
             productoServicio.modificarProducto(nombre, precio, codigoFabricante, codigo);
-            //     "redirect:../lista" me llevaba a localhost:8080/lista
+            redirect.addFlashAttribute("exito", "El producto ha sido modificado con exito.");
             return "redirect:./lista";
+
         } catch (MiException ex) {
             List<Fabricante> fabricantes = fabricanteServicio.listarFabricantes();
             modelo.addAttribute("fabricantes", fabricantes);

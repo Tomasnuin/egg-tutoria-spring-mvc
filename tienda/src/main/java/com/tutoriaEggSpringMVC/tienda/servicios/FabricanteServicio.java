@@ -16,7 +16,6 @@ public class FabricanteServicio {
     @Autowired
     private FabricanteRepositorio fabricanteRepositorio;
 
-    // Porque funciona sin la etiqueta transactional?
     @Transactional
     public void crearFabricante(String nombre) throws MiException {
 
@@ -35,7 +34,6 @@ public class FabricanteServicio {
         }
     }
 
-    // Porque funciona sin la etiqueta transactional?
     public List<Fabricante> listarFabricantes() {
         List<Fabricante> fabricantes = new ArrayList();
 
@@ -48,14 +46,16 @@ public class FabricanteServicio {
 
         validar(nombre);
 
-        Optional<Fabricante> respuesta = fabricanteRepositorio.findById(codigo);
+        Fabricante respuesta = findById(codigo);
 
-        if (respuesta.isPresent()) {
-            Fabricante fabricante = respuesta.get();
+        if (respuesta != null) {
+            Fabricante fabricante = respuesta;
 
             fabricante.setNombre(nombre);
 
             fabricanteRepositorio.save(fabricante);
+        } else {
+            throw new MiException("Es necesario un fabricante existente.");
         }
     }
 
@@ -67,11 +67,17 @@ public class FabricanteServicio {
      * @return
      */
     public Fabricante findById(String codigo) {
+
         Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(codigo);
+
         if (respuestaFabricante.isPresent()) {
+
             return respuestaFabricante.get();
-        }else{
+
+        } else {
+
             return null;
+
         }
     }
 }
