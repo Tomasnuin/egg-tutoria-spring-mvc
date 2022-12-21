@@ -15,7 +15,7 @@
         <div class="container-fluid m-5 contenedor">
 
             <!-- ${variable?.atributo} permite variable nula -->
-            <form class="formulario" th:action="@{/producto/__${producto?.codigo}__}" method="POST">
+            <form class="formulario" th:action="@{/producto/__${producto.codigo}__}" method="POST">
 
                 <input hidden th:value="${codigo}" name="codigo">
 
@@ -23,12 +23,12 @@
 
                     <label class="mb-2">Cargar Productos</label> 
 
-                    <input th:value="${producto?.nombre}" type="text" class="form-control" name="nombre">
+                    <input th:value="${producto.nombre}" type="text" class="form-control" name="nombre">
                 </div>
 
                 <div class="form-group my-3">
 
-                    <input th:value="${producto?.precio}" type="number" step="0.01" class="form-control" name="precio">
+                    <input th:value="${producto.precio}" type="number" step="0.01" class="form-control" name="precio">
                 </div>
 
                 <div class="form-group my-3">
@@ -36,8 +36,11 @@
                     <label class="mb-2">Fabricante</label> 
                     <select name="codigoFabricante">
 
-                        <option th:value="${producto?.fabricante.codigo}" selected>Seleccionar Fabricante</option>
-
+                        <option>Seleccionar Fabricante</option>
+                        
+                        <option hidden th:value="${producto.fabricante.codigo}"
+                                th:text="${producto.fabricante.nombre}" selected></option>
+                        
                         <option th:each="fabricante : ${fabricantes}"
                                 th:value="${fabricante.codigo}"
                                 th:text="${fabricante.nombre}"

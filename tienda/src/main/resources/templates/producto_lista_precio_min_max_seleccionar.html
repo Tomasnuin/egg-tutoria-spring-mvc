@@ -38,26 +38,23 @@
                     </div>
                 </div>
             </section>
-        </div>
 
 
-
-
-
-
-
-        <div th:if="${exito}!=null" class="card text-white bg-success my-3 mt-3 mensajeExito" >
-            <div class="card-body">
-                <h5 class="card-title">Exito 👍</h5>
-                <p class="card-text" th:text="${exito}"></p>
+            <div th:if="${exito}!=null" class="card text-white bg-success my-3 mt-3 mensajeExito" >
+                <div class="card-body">
+                    <h5 class="card-title">Exito 👍</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
             </div>
-        </div>
-        <div th:if="${error}!=null" class="card text-white bg-danger my-3 mensajeError" >
-            <div class="card-body">
-                <h5 class="card-title">Error 👎</h5>
-                <p class="card-text" th:text="${error}"></p>
+            <div th:if="${error}!=null" class="card text-white bg-danger my-3 mensajeError" >
+                <div class="card-body">
+                    <h5 class="card-title">Error 👎</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
             </div>
+            
         </div>
+
 
         <footer class="text-muted py-5">
             <div class="containerFooter">

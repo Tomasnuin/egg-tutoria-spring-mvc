@@ -20,6 +20,7 @@
             <form class="formulario" th:action="@{/producto/registro}" method="POST">
                 <div class="form-group my-3">
                     <label class="mb-2">Cargar Producto</label> 
+                    
                     <input type="text" class="form-control" name="nombre" th:value="${nombre}" placeholder="Nombre del Producto">
 
                 </div>
@@ -38,7 +39,7 @@
                         <option th:each="fabricante : ${fabricantes}"
                                 th:value="${fabricante.codigo}"
                                 th:text="${fabricante.nombre}"
-                                />
+                                /></option>
                     </select>
                 </div>
 
