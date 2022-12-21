@@ -95,6 +95,33 @@ public class ProductoControlador {
 
     }
 
+    
+    @GetMapping("/lista/fabricante/seleccionar")
+    public String listaFabricanteSeleccionar(ModelMap modelo) {
+        List<Fabricante> fabricantes = fabricanteServicio.listarFabricantes();
+
+        modelo.addAttribute("fabricantes", fabricantes);
+
+        return "producto_lista_fabricante.html";
+    }
+
+    @PostMapping("/lista/fabricantes")
+    public String listaFabricantes(@RequestParam String codigoFabricante,
+            ModelMap modelo) {
+        try {
+            List<Producto> productos = productoServicio.listarProductosPorFabricante(codigoFabricante);
+
+            modelo.addAttribute("productos", productos);
+            return "producto_lista.html";
+
+        } catch (Exception e) {
+
+            modelo.put("error", e.getMessage());
+            return "producto_lista_precio_min_max_seleccionar.html";
+        }
+
+    }
+
     @GetMapping("/modificar/{codigo}")
     public String modificar(@PathVariable String codigo, ModelMap modelo) {
         List<Fabricante> fabricantes = fabricanteServicio.listarFabricantes();

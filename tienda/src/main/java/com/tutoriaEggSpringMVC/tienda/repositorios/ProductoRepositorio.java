@@ -14,7 +14,7 @@ public interface ProductoRepositorio extends JpaRepository<Producto, String> {
     @Query("SELECT p FROM Producto p WHERE p.precio BETWEEN :precioMin and :precioMax")
     public List<Producto> buscarPorRangoPrecio(@Param("precioMin") Double precioMin, @Param("precioMax") Double precioMax);
 
-    @Query("SELECT p FROM Producto p WHERE p.fabricante.nombre = :nombre")
-    public List<Producto> buscarPorFabricante(@Param("nombre") String nombre);
+    @Query("SELECT p FROM Producto p WHERE p.fabricante.codigo = :codigo")
+    public List<Producto> buscarPorFabricante(@Param("codigo") String codigo);
 
 }
