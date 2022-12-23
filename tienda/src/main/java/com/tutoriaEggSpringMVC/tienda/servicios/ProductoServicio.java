@@ -53,6 +53,7 @@ public class ProductoServicio {
         }
     }
 
+    @Transactional
     public List<Producto> listarProductos() {
         List<Producto> productos = new ArrayList();
 
@@ -61,6 +62,7 @@ public class ProductoServicio {
         return productos;
     }
 
+    @Transactional
     public List<Producto> listarProductosPorFabricante(String codigoFabricante) {
         List<Producto> productos = new ArrayList();
 
@@ -69,11 +71,13 @@ public class ProductoServicio {
         return productos;
     }
 
+    @Transactional
     public List<Producto> listarProductosPorRangoPrecio(Double precioMin, Double precioMax) throws MiException {
-        
-        if(precioMax < precioMin){
-            throw new MiException("El precio minimo no puede ser superior al precio maximo!");
+
+        if (precioMax < precioMin) {
+            throw new MiException("El precio minimo no puede ser superior al precio maximo.");
         }
+        
         List<Producto> productos = new ArrayList();
 
         productos = productoRepositorio.buscarPorRangoPrecio(precioMin, precioMax);
@@ -103,18 +107,19 @@ public class ProductoServicio {
         }
     }
 
+    @Transactional
     public Producto findById(String codigo) {
 
         Optional<Producto> respuesta = productoRepositorio.findById(codigo);
 
         if (respuesta.isPresent()) {
-            
+
             return respuesta.get();
-            
+
         } else {
-            
+
             return null;
-            
+
         }
     }
 }

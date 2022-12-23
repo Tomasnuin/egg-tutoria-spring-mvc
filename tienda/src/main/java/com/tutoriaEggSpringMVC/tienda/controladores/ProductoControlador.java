@@ -92,13 +92,11 @@ public class ProductoControlador {
             modelo.put("error", e.getMessage());
             return "producto_lista_precio_min_max_seleccionar.html";
         }
-
     }
 
     @GetMapping("/lista/fabricante/seleccionar")
     public String listaFabricanteSeleccionar(ModelMap modelo) {
         List<Fabricante> fabricantes = fabricanteServicio.listarFabricantes();
-
         modelo.addAttribute("fabricantes", fabricantes);
 
         return "producto_lista_fabricante.html";
