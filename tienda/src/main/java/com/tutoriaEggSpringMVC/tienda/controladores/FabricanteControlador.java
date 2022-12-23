@@ -61,7 +61,7 @@ public class FabricanteControlador {
     }
 
     @PostMapping("{codigo}")
-    public String modificar(@PathVariable String codigo,@RequestParam String nombre, ModelMap modelo, RedirectAttributes redirect) {
+    public String modificar(@PathVariable String codigo, @RequestParam String nombre, ModelMap modelo, RedirectAttributes redirect) {
         try {
             fabricanteServicio.modificarFabricante(nombre, codigo);
             //     "redirect:../lista" me llevaba a localhost:8080/lista

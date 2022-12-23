@@ -34,6 +34,7 @@ public class FabricanteServicio {
         }
     }
 
+    @Transactional
     public List<Fabricante> listarFabricantes() {
         List<Fabricante> fabricantes = new ArrayList();
 
@@ -42,6 +43,7 @@ public class FabricanteServicio {
         return fabricantes;
     }
 
+    @Transactional
     public void modificarFabricante(String nombre, String codigo) throws MiException {
 
         validar(nombre);
