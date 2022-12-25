@@ -23,7 +23,7 @@
     margin: auto;
 }
 
-.tituloBiblioteca{
+.tituloTienda{
     width: 80%;
     text-align: center;
     font-size: 40px;
@@ -39,7 +39,7 @@
     justify-content: end;
 }
 
-.contenedorLibros{
+.contenedorProductos{
     margin-top: 80px;
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@
     align-items: center;
 }
 
-.tituloLibros{
+.tituloProductos{
     font-size: 22px;
     font-weight: 500;
 }
