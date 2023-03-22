@@ -55,7 +55,7 @@ public class FabricanteControlador {
 
     @GetMapping("/modificar/{codigo}")
     public String modificar(@PathVariable String codigo, ModelMap modelo) {
-
+        
         modelo.put("fabricante", fabricanteServicio.findById(codigo));
         return "fabricante_modificar.html";
     }

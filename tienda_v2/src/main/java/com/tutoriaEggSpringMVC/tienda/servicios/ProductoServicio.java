@@ -4,11 +4,9 @@ import com.tutoriaEggSpringMVC.tienda.entidades.Fabricante;
 import com.tutoriaEggSpringMVC.tienda.entidades.Producto;
 import com.tutoriaEggSpringMVC.tienda.excepciones.MiException;
 import com.tutoriaEggSpringMVC.tienda.repositorios.ProductoRepositorio;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,7 +20,7 @@ public class ProductoServicio {
         this.productoRepositorio = productoRepositorio;
         this.fabricanteServicio = fabricanteServicio;
     }
-    
+
     @Transactional
     public void crearProducto(String nombre, Double precio, String codigoFabricante) throws MiException {
 
@@ -58,34 +56,21 @@ public class ProductoServicio {
 
     @Transactional
     public List<Producto> listarProductos() {
-        List<Producto> productos = new ArrayList();
-
-        productos = productoRepositorio.findAll();
-
-        return productos;
+        return productoRepositorio.findAll();
     }
 
     @Transactional
     public List<Producto> listarProductosPorFabricante(String codigoFabricante) {
-        List<Producto> productos = new ArrayList();
-
-        productos = productoRepositorio.buscarPorFabricante(codigoFabricante);
-
-        return productos;
+        return productoRepositorio.buscarPorFabricante(codigoFabricante);
     }
 
     @Transactional
     public List<Producto> listarProductosPorRangoPrecio(Double precioMin, Double precioMax) throws MiException {
-
         if (precioMax < precioMin) {
             throw new MiException("El precio minimo no puede ser superior al precio maximo.");
         }
-        
-        List<Producto> productos = new ArrayList();
 
-        productos = productoRepositorio.buscarPorRangoPrecio(precioMin, precioMax);
-
-        return productos;
+        return productoRepositorio.buscarPorRangoPrecio(precioMin, precioMax);
     }
 
     @Transactional
@@ -104,7 +89,6 @@ public class ProductoServicio {
             producto.setFabricante(respuestaFabricante);
 
             productoRepositorio.save(producto);
-
         } else {
             throw new MiException("Es necesario un fabricante y/o un producto existentes.");
         }

@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/producto")
 public class ProductoControlador {
 
-    
     private final ProductoServicio productoServicio;
     
     private final FabricanteServicio fabricanteServicio;

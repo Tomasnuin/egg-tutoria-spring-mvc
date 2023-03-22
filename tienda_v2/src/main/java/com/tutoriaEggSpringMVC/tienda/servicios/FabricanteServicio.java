@@ -3,11 +3,9 @@ package com.tutoriaEggSpringMVC.tienda.servicios;
 import com.tutoriaEggSpringMVC.tienda.entidades.Fabricante;
 import com.tutoriaEggSpringMVC.tienda.excepciones.MiException;
 import com.tutoriaEggSpringMVC.tienda.repositorios.FabricanteRepositorio;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +16,7 @@ public class FabricanteServicio {
     public FabricanteServicio(FabricanteRepositorio fabricanteRepositorio) {
         this.fabricanteRepositorio = fabricanteRepositorio;
     }
-    
+
     @Transactional
     public void crearFabricante(String nombre) throws MiException {
 
@@ -32,18 +30,14 @@ public class FabricanteServicio {
 
     private void validar(String nombre) throws MiException {
 
-        if (nombre.isEmpty() || nombre == null) {
+        if (nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo o estar vacio.");
         }
     }
 
     @Transactional
     public List<Fabricante> listarFabricantes() {
-        List<Fabricante> fabricantes = new ArrayList();
-
-        fabricantes = fabricanteRepositorio.findAll();
-
-        return fabricantes;
+        return fabricanteRepositorio.findAll();
     }
 
     @Transactional

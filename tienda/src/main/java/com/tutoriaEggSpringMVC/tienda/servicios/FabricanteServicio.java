@@ -73,13 +73,9 @@ public class FabricanteServicio {
         Optional<Fabricante> respuestaFabricante = fabricanteRepositorio.findById(codigo);
 
         if (respuestaFabricante.isPresent()) {
-
             return respuestaFabricante.get();
-
         } else {
-
             return null;
-
         }
     }
 }
